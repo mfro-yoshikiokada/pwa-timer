@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PWAテスト</title>
+    <meta charset="utf-8" />
+    <script src="script.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+</head>
+
+<body>
+    <div class="wrapper">
+        <div id="time">00:00.000</div>
+        <div>
+            <button id="start" onclick="start()">Start</button>
+            <button id="stop" onclick="stop()" disabled>Stop</button>
+            <button id="reset" onclick="reset()" disabled>Reset</button>
+        </div>
+    </div>
+
+    <script>
+        // サービスワーカーの登録
+        if ('serviceWorker' in navigator) {
+            // 'load'イベントが他の作業を妨げないように待機する
+            window.addEventListener('load', async () => {
+                // サービスワーカーの登録を試みる
+                try {
+                    const reg = await navigator.serviceWorker.register('service_worker.js');
+                    console.log('サービスワーカーが登録できました!😎', reg);
+                } catch (err) {
+                    console.log('サービスワーカーの登録に失敗しました😥', err);
+                }
+            });
+        }
+    </script>
+</body>
