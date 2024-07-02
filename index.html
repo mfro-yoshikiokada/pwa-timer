@@ -3,17 +3,27 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="manifest" href="manifest.json">
     <title>PWAテスト</title>
+    <link rel="stylesheet" href="style.css">
     <meta charset="utf-8" />
     <script src="script.js"></script>
-    <link rel="stylesheet" href="style.css">
-    <link rel="manifest" href="manifest.json">
+
+    <link href="splashscreens/iphone5_splash.png" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image" />
+    <link href="splashscreens/iphone6_splash.png" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image" />
+    <link href="splashscreens/iphoneplus_splash.png" media="(device-width: 621px) and (device-height: 1104px) and (-webkit-device-pixel-ratio: 3)" rel="apple-touch-startup-image" />
+    <link href="splashscreens/iphonex_splash.png" media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3)" rel="apple-touch-startup-image" />
+    <link href="splashscreens/iphonexr_splash.png" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image" />
+    <link href="splashscreens/iphonexsmax_splash.png" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3)" rel="apple-touch-startup-image" />
 </head>
 
 <body>
     <div class="wrapper">
+        <!-- 計測時間を表示 -->
         <div id="time">00:00.000</div>
         <div>
+
+            <!-- スタート・ストップ・リセットボタン -->
             <button id="start" onclick="start()">Start</button>
             <button id="stop" onclick="stop()" disabled>Stop</button>
             <button id="reset" onclick="reset()" disabled>Reset</button>
@@ -21,18 +31,15 @@
     </div>
 
     <script>
-        // サービスワーカーの登録
         if ('serviceWorker' in navigator) {
-            // 'load'イベントが他の作業を妨げないように待機する
-            window.addEventListener('load', async () => {
-                // サービスワーカーの登録を試みる
-                try {
-                    const reg = await navigator.serviceWorker.register('service_worker.js');
-                    console.log('サービスワーカーが登録できました!😎', reg);
-                } catch (err) {
-                    console.log('サービスワーカーの登録に失敗しました😥', err);
-                }
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('sw.js').then(function(registration) {
+                    console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                }, function(err) {
+                    console.log('ServiceWorker registration failed: ', err);
+                });
             });
         }
     </script>
-</body>
+    </body>
+</html>
